@@ -1,0 +1,38 @@
+<section class="vh-200" style="background-color: #f2f5f6;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <h3 class="mb-5">Szállítási adatok véglegesítése és rendelés leadása</h3>
+            <hr>
+            <div class="row">
+              <div class="col-xs-12 col-md-10 mx-md-auto">
+                <form #shippingform="ngForm" (ngSubmit)="orderSubmit(shippingform)">
+                  <div class="form-group">
+                    <label for="postCode">Irányítószám</label>
+                    <input id="postCode" class="form-control" ngModel name="postCode"  required minlength="1"><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="city">Helység</label>
+                    <input id="city" class="form-control" ngModel name="city" required minlength="1"><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="street">Utca, házszám</label>
+                    <input id="street" class="form-control" ngModel name="street" required minlength="1"><br>
+                  </div>
+                  <div>
+                    <button class="btn btn-primary" style="align-self: center" type="submit">
+                      Rendelés leadása
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

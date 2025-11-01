@@ -1,0 +1,22 @@
+<h1>Beérkezett rendelések</h1>
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Dátum</th>
+    <th scope="col">Név</th>
+    <th scope="col">Ár</th>
+    <th scope="col">Szállítási hely</th>
+    <th scope="col">Rendelt könyvek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let order of (orders | async)">
+    <th scope="row"> {{ order.dateTime | date:'yyyy-MM-dd HH:mm:ss' }}</th>
+    <td>{{order.userDTO ? order.userDTO.name : 'N/A'}}</td>
+    <td>{{order.price}}</td>
+    <td>{{order.deliveryAddress}}</td>
+    <td>{{ order.orderedBooks?.length ? getOrderBookTitle(order.orderedBooks) : '—' }}</td>
+  </tr>
+
+  </tbody>
+</table>

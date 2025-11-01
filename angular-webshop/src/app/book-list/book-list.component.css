@@ -1,0 +1,15 @@
+a {
+  text-decoration: none;
+}
+.py-5{
+  background: #f2f5f6;
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-9px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}

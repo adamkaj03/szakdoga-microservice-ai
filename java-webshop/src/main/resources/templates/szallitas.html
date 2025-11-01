@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Szallitasi informaciok</title>
+    <link rel="stylesheet"
+          th:href="@{/css/bejelentkezes.css}" />
+</head>
+<body>
+<h1 class="felso"><a th:href="@{/}" href="#">Info könyvek.hu</a></h1>
+
+<form action="#" th:action="@{/szallitasCimMegadas}" method="GET" class="szallitas-form">
+  <div class="form-group">
+    <label for="iranyitoSzam">Irányítószám:</label>
+    <input type="number" id="iranyitoSzam" name="iranyitoSzam" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="helyseg">Helység:</label>
+    <input type="text" id="helyseg" name="helyseg" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="utca">Utca, házszám:</label>
+    <input type="text" id="utca" name="utca" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Szállítási adatok véglegesítése</button>
+</form>
+
+
+</body>
+</html>

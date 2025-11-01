@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kosár</title>
+    <link rel="stylesheet"
+          th:href="@{/css/cart.css}" />
+</head>
+<body>
+    <h1 class="felso"><a th:href="@{/}" href="#">Info könyvek.hu</a></h1>
+    <h2>Kosár tartalma:</h2>
+    <tbody>
+        <!-- Ha üres a kosár -->
+        <div th:if="${session.cart.kosarTartalom.empty}">
+            <p>A kosár üres</p>
+        </div>
+
+        <!-- Ha nem üres a kosár -->
+        <div th:unless="${session.cart.kosarTartalom.empty}">
+            <table>
+                <tr th:each="book : ${session.cart.kosarTartalom}">
+                    <td><a th:href="@{/book(id=${book.id})}"><span th:text="${book.cim}"> Cím </span></a></td>
+                    <td><span th:text="${book.szerzo}"> Szerző </span></td>
+                    <td><span th:text="${book.ar}+ ' Ft'"> Ár </span></td>
+                    <td>
+                        <form th:action="@{/kosarbolTorol}" method="post">
+                            <input type="hidden" name="id" th:value="${book.id}" />
+                            <button type="submit">Törlés</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </tbody>
+    <h3>Összeg</h3>
+    <label th:text="${session.cart.osszeg} + ' Ft'">0 Ft</label>
+    <form action="/szallitas" th:if="${session.cart.osszeg != 0}">
+        <input type="submit" value="Szállítás">
+    </form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div class="col mb-5" *ngFor="let book of (books | async)">
+        <a (click)="navigateToBookPage(encodeURIComponent(book.title))" (mouseover)="changeCursorStyle($event)" >
+          <div class="card h-100 card-hover">
+            <ng-container *ngIf="isBookImgUrlNotNull(book); else elseBlock">
+              <img class="card-img-top" src="{{book.imgUrl}}" alt="..." />
+            </ng-container>
+            <ng-template #elseBlock>
+              <img class="card-img-top" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />
+            </ng-template>
+
+            <div class="card-body p-4">
+              <div class="text-center">
+                <h5 class="fw-bolder">{{ book.title }}</h5>
+                {{book.author}}
+                <h4>{{ book.price }} Ft</h4>
+              </div>
+            </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center"><button class="btn btn-outline-dark mt-auto" (click)="addToCart(book)" data-no-navigation>Kosárba</button></div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

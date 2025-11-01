@@ -1,0 +1,65 @@
+/* Alapértelmezett stílusok */
+body {
+    margin: 0;
+    font-family: Arial;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* A fejléc stílusa */
+.felso {
+    background-color: #337ab7;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+
+.felso a {
+    color: white;
+    text-decoration: none;
+}
+
+/* A fő cím stílusa */
+h1 {
+    margin-top: 20px;
+    font-size: 36px;
+    text-align: center;
+}
+
+/* A cím és szerző stílusa */
+h2, h3 {
+    margin: 10px 0;
+}
+
+/* A táblázat stílusa */
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid;
+}
+
+/* A form stílusa */
+form {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+input[type="submit"] {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+

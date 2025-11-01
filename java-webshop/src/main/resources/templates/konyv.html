@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Könyv adatok</title>
+    <link rel="stylesheet"
+          th:href="@{/css/book.css}" />
+</head>
+<body>
+    <h1 class="felso"><a th:href="@{/}" href="#">Info könyvek.hu</a></h1>
+    <h2 th:text="'Cím: '+${book.cim}">nincs</h2>
+    <h3 th:text="'Szerző: '+${book.szerzo}">Szerző:-</h3>
+    <br>
+    <table>
+        <tr>
+            <th>Kategória:</th>
+            <td th:text="${book.category}"></td>
+        </tr>
+        <tr>
+            <th>Kiadás éve:</th>
+            <td th:text="${book.kiadasEve}"></td>
+        </tr>
+    </table>
+    <h4>Leírás</h4>
+    <p id="leiras" >Ez egy leírás.</p>
+    <form action="#" th:action="@{/kosarba}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        <input type="hidden" name="id" th:value="${book.id}" />
+        <input type="submit" value="Kosárba rakom"></form>
+</body>
+</html>

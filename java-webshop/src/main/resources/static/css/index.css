@@ -1,0 +1,102 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+}
+
+.felso {
+  background-color: #337ab7;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.felso a {
+  color: white;
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: #333;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+input[type="text"] {
+  width: 200px;
+  padding: 6px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 4px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #337ab7;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+td a {
+  text-decoration: none;
+}
+input[type="submit"] {
+  background-color: #337ab7;
+  color: white;
+  cursor: pointer;
+}
+
+#hibaUzenet {
+  background-color: red;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+input[type="button"] {
+  background-color: white;
+  color: #337ab7;
+  cursor: pointer;
+  border: 1px solid #337ab7;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: #336699;
+}
+

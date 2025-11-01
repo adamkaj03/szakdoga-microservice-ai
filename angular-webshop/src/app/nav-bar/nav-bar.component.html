@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="">Info könyvek.hu</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto" >
+      <li class="nav-item active">
+        <ng-container *ngIf="!isUserSignedIn(); else elseBlock">
+          <a class="nav-link" href="/signin" (click)="navigateToSignIn()" >Belépés</a>
+        </ng-container>
+        <ng-template #elseBlock>
+          <app-logout></app-logout>
+        </ng-template>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link cart-link" [href]="'/cart'" (click)="navigateToCart()">Kosár</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Kategóriák
+        </a>
+        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+          <a class="dropdown-item" (click)="refreshWithCategory(null)" href="/">Összes</a>
+          <a *ngFor="let category of (categories | async)" class="dropdown-item" (click)="refreshWithCategory(category.id)" href="/">{{category.name}}</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <ng-container *ngIf="isUserAdmin()">
+          <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Adminisztrátor menü
+          </a>
+          <div class="dropdown-menu" aria-labelledby="adminDropdown">
+            <a class="dropdown-item" href="/newItem">Új könyv vagy kategória hozzáadása</a>
+            <a class="dropdown-item" href="/orders">Beérkezett rendelések</a>
+            <a class="dropdown-item" href="/archives">Archiválás</a>
+          </div>
+        </ng-container>
+      </li>
+    </ul>
+      <form class="my-2 my-lg-0" #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
+        <div class="d-flex justify-content-end">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ngModel name="search">
+          <a href="/">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+          </a>
+
+        </div>
+      </form>
+
+  </div>
+</nav>
+

@@ -1,0 +1,49 @@
+<section class="vh-200" style="background-color: #f2f5f6;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <h3 *ngIf="isLoginMode" class="mb-5">Bejelentkezés</h3>
+            <h3 *ngIf="!isLoginMode" class="mb-5">Regisztráció</h3>
+            <hr>
+            <div class="row">
+              <div class="col-xs-12 col-md-10 mx-md-auto">
+                <div class="alert alert-info" *ngIf="isCameFromAuthGuard">
+                  <p>A rendelés folytatásához jelentkezz be vagy regisztrálj!</p>
+                </div>
+                <div class="alert alert-danger" *ngIf="errorMessage">
+                  <p>{{ errorMessage }}</p>
+                </div>
+                <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+                  <div *ngIf="!isLoginMode" class="form-group">
+                    <input type="text" id="name" class="form-control" ngModel name="name" required minlength="1" placeholder="Teljes név"><br>
+                  </div>
+                  <div class="form-group">
+                    <input type="username" id="username" class="form-control" ngModel name="username" required minlength="1" placeholder="Felhasználónév"><br>
+                  </div>
+                  <div *ngIf="!isLoginMode" class="form-group">
+                    <input type="email" id="email" class="form-control" ngModel name="email" required email placeholder="Email"><br>
+                  </div>
+                  <div class="form-group">
+                    <input type="password"  id="password" class="form-control" ngModel name="password" required minlength="6" placeholder="Jelszó"><br>
+                  </div>
+                  <div>
+                    <button class="btn btn-primary" style="align-self: center" type="submit" [disabled]="!authForm.valid">
+                      {{isLoginMode ? 'Belépés' : 'Regisztráció'}}
+                    </button>
+                    <hr>
+                    <button class="btn btn-primary" type="button" style="align-self: center" (click)="onSwitchMode()">
+                      {{isLoginMode ? 'Regisztrálni akarok' : 'Bejelentkezni akarok'}}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

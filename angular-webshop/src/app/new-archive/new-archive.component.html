@@ -1,0 +1,24 @@
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card" style="width: 25rem; height: auto;">
+      <div class="card-header">
+        Archiválás indítása
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="mb-3">
+            <label for="yearSelect" class="form-label">Válassz évet</label>
+            <select class="form-select" id="yearSelect" [(ngModel)]="selectedYear" name="year">
+              <option *ngFor="let year of archiveYears" [value]="year">{{ year }}</option>
+            </select>
+          </div>
+          <button type="button"
+                  class="btn btn-primary"
+                  [disabled]="!selectedYear"
+                  (click)="startArchive()">
+            Archiválás indítása
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

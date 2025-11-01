@@ -1,0 +1,123 @@
+/* Fejléc */
+.felso {
+    background-color: #337ab7;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.felso a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Form */
+form {
+    margin-bottom: 20px;
+}
+
+/* Label */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Input mezők */
+input[type="text"],
+input[type="password"],
+input[type="submit"],
+input[type="button"],
+input[type="email"],
+input[type="tel"],
+input[type="number"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+input[type="submit"] {
+    background-color: #337ab7;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="button"] {
+    background-color: white;
+    color: #337ab7;
+    cursor: pointer;
+    border: 1px solid #337ab7;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #336699;
+}
+
+/* Link */
+a {
+    color: #336699;
+    text-decoration: none;
+}
+
+/* Táblázat */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #336699;
+    color: white;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+td a {
+    color: #336699;
+    text-decoration: underline;
+}
+
+/* Radio buttons */
+input[type="radio"] {
+    display: none;
+}
+
+label[for="magan"]::before,
+label[for="ceg"]::before,
+label[for="egyeb"]::before {
+    display: inline-block;
+    content: "";
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked + label::before {
+    background-color: #337ab7;
+    border-color: #337ab7;
+    content: "\2713";
+    color: white;
+    font-size: 1.2em;
+    line-height: 20px;
+    text-align: center;
+}

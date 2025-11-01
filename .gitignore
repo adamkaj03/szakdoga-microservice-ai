@@ -1,0 +1,59 @@
+# ---- Általános ----
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
+
+# ---- IntelliJ IDEA ----
+.idea/
+*.iml
+out/
+# JetBrains IDE által generált workspace konfigurációk
+*.iws
+# JetBrains IDE által generált temp fájlok
+.idea_modules/
+atlassian-ide-plugin.xml
+
+# ---- VS Code ----
+.vscode/
+.history/
+.code-workspace
+
+# ---- Node/Angular frontend ----
+angular-webshop/node_modules/
+angular-webshop/dist/
+angular-webshop/.angular/
+angular-webshop/package-lock.json
+angular-webshop/npm-debug.log
+angular-webshop/yarn-error.log
+angular-webshop/.env
+angular-webshop/.env.*
+
+# Angular build output (ha más néven van a build dir, azt is add hozzá)
+angular-webshop/build/
+angular-webshop/tmp/
+
+# ---- Java/Spring backend ----
+java-webshop/target/
+java-webshop/.classpath
+java-webshop/.project
+java-webshop/.settings/
+java-webshop/mvnw
+java-webshop/mvnw.cmd
+java-webshop/.mvn/
+java-webshop/logs/
+java-webshop/.env
+
+# ---- OS/Tooling általános ----
+*.bak
+*.tmp
+*.old
+*~
+*.orig
+
+
+# ---- Egyéb ----
+*.local
+.env.*

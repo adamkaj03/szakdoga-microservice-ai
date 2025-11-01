@@ -1,0 +1,56 @@
+body {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+}
+
+.felso {
+    background-color: #337ab7;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.felso a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #337ab7;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+td a {
+    text-decoration: none;
+}
+
+label {
+    font-weight: bold;
+    color: #4d4d4d;
+}
+
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+}

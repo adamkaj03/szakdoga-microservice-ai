@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elem felvétel</title>
+  <link rel="stylesheet"
+        th:href="@{/css/regisztracio.css}" />
+</head>
+<body>
+<h1 class="felso"><a th:href="@{/}" href="#">Info könyvek.hu</a></h1>
+
+<h1>Új kategória felvétele a rendszerbe</h1>
+<form action="#" th:action="@{/ujKategoria}" th:object="${ujKategoria}" method="GET">
+    <label for="ujKategoria">Új kategória felvétele:</label>
+    <input type="text" name="kategoriaFel">
+    <input type="submit" value="Kategória felvétele!">
+</form>
+
+
+<h1>Új elem felvétele a rendszerbe</h1>
+<form action="#" th:action="@{/ujKonyv}" th:object="${ujKonyv}" method="GET">
+  <label for="cim">Könyv cím:</label><br>
+  <input type="text" th:field="*{cim}"><br>
+  <label for="szerzo">Szerző:</label><br>
+  <input type="text" th:field="*{szerzo}"><br>
+  <label for="kiadasEv">Kiadás éve:</label>
+  <input type="text" th:field="*{kiadasEve}"><br>
+  <label for="ar">Ára:</label>
+  <input type="text" th:field="*{ar}"><br>
+  <label for="category">Kategoria kiválasztás:</label>
+  <select name="category" >
+    <option th:each="category : ${kategoriak}"
+            th:value="${category.id}" th:text="${category.nev}">Java SE</option>
+  </select>
+  <input type="submit" value="Elem felvétele!">
+</form>
+
+</body>
+</html>

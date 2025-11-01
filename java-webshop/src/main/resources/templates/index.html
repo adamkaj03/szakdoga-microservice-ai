@@ -1,0 +1,78 @@
+    <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info könyvek</title>
+    
+    <!-- CSS file-ok-->
+    <link rel="stylesheet"
+          th:href="@{/css/index.css}" />
+</head>
+<body>
+    <h1 class="felso"><a th:href="@{/}" href="#">Info könyvek.hu</a></h1>
+    <div id="hibaUzenet" th:if="${regisztacioUzenet != null}">
+        <p>Hiba történt a regisztráció során. Van már a megadott felhasználónévvel vagy email-el felhasználó!<span th:text="${hibaUzenet}"></span></p>
+    </div>
+    <div id="rendelesUzenet" th:if="${rendelesEredmeny != null}">
+        <p><span th:text="${rendelesEredmeny}"></span></p>
+    </div>
+    <form action="post">
+        <ul>
+            <li sec:authorize="isAnonymous()">
+                <a th:href="@{/bejelentkezes}" href="#">Belépés</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/kijelentkezes}" href="#">Kilepes</a>
+            </li>
+            <li><a th:href="@{/cart}" href="#">Kosár</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/elemFelvetel}" href="#">Új termék felvétele</a>
+            </li>
+        </ul>
+    </form>
+
+
+
+    <form action="/kereses" method="get">
+        <input type="text" name="keresoSzo" placeholder="Keresés..." th:value="${keresoSzo}">
+        <button type="submit">Keresés</button>
+    </form>
+
+
+    <form th:action="@{/kategoriaSzures}" method="get">
+        <select name="category" >
+            <option value="">Összes</option>
+            <option th:if="${category.id!=session.szuresiKategoria}" th:each="category : ${kategoriak}"
+                    th:value="${category.id}" th:text="${category.nev}">Java SE</option>
+            <option th:if="${category.id==session.szuresiKategoria}"  th:each="category : ${kategoriak}"
+                    th:value="${category.id}" th:text="${category.nev}" selected>Java SE</option>
+        </select>
+        <button type="submit">Szűrés</button>
+    </form>
+
+    <h2 class="felso">Összes könyv</h2>
+    <table>
+        <thead>
+        <tr>
+            <th> Cím </th>
+            <th> Szerző </th>
+            <th> Ár </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${konyvek}">
+            <td><a th:href="@{/book(id=${book.id})}"><span th:text="${book.cim}"> Cím </span></a> </td>
+            <td><span th:text="${book.szerzo}"> Szerző </span></td>
+            <td><span th:text="${book.ar} + ' Ft'"> Ár </span></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(konyvek)}">
+            <td colspan="3">Nincs termék a beállított szűrési feltételekhez</td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

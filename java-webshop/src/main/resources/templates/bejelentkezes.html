@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bejelentkezés</title>
+    <link rel="stylesheet"
+          th:href="@{/css/bejelentkezes.css}" />
+</head>
+<body>
+    <h1 class="felso"><a th:href="@{/}" href="#">Info könyvek.hu</a></h1>
+    <h1>Bejelentkezés</h1>
+    <form action="#" th:action="@{/authenticateTheUser}" method="post">
+        <div th:if="${param.error}">
+            <i>Hibás felhasználónév vagy jelszó!</i>
+        </div>
+
+        <label for="felhasznalonev">Felhasználónév</label>
+        <input type="text" name="username" id="felhasznalonev"><br>
+        <label for="jelszo">Jelszó</label>
+        <input type="password" name="password" id="jelszo">
+        <input type="submit" id="belepes" value="Belépés!">
+    </form>
+
+    <form th:action="@{/regisztracio}" th:method="get">
+        <input type="submit" value="Regisztráció">
+    </form>
+
+</body>
+</html>
