@@ -57,3 +57,4 @@ java-webshop/.env
 # ---- Egyéb ----
 *.local
 .env.*
+.env

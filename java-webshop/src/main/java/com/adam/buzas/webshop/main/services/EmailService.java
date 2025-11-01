@@ -7,8 +7,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,9 @@ public class EmailService {
     public String loadEmailTemplate(String templatePath) {
         try {
             ClassPathResource resource = new ClassPathResource("email-templates/" + templatePath);
-            return Files.readString(resource.getFile().toPath(), StandardCharsets.UTF_8);
+            try (InputStream is = resource.getInputStream()) {
+                return new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Nem sikerült beolvasni az email sablont", e);
         }
