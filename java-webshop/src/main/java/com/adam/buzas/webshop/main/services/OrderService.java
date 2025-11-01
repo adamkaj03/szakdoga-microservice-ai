@@ -1,14 +1,16 @@
 package com.adam.buzas.webshop.main.services;
 
 
+import com.adam.buzas.webshop.main.dto.EmailDto;
+import com.adam.buzas.webshop.main.model.*;
 import com.adam.buzas.webshop.main.repository.OrderRepository;
-import com.adam.buzas.webshop.main.model.Book;
-import com.adam.buzas.webshop.main.model.Cart;
-import com.adam.buzas.webshop.main.model.Order;
-import com.adam.buzas.webshop.main.model.ShippingType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -25,6 +27,8 @@ public class OrderService {
     BookService bookService;
     @Autowired
     ShippingTypeService shippingTypeService;
+    @Autowired
+    EmailService emailService;
 
     public Optional<Order> getOrder(Order order){
         return orderRepository.findById(order.getId());
@@ -37,7 +41,8 @@ public class OrderService {
     public Order newOrder(LocalDateTime date, String deliveryAddress, String username, Cart cart, ShippingType shippingType){
         int fullPrice = cart.getAmount() + shippingType.getPrice();
 
-        Order order = new Order(date, deliveryAddress, userService.getUserByUsername(username), shippingType, fullPrice);
+        User user = userService.getUserByUsername(username);
+        Order order = new Order(date, deliveryAddress, user, shippingType, fullPrice);
         orderRepository.save(order);
         Map<Integer, Integer> bookIdCount = new HashMap<>();
         for(Book book : cart.getCartContent()){
@@ -51,7 +56,32 @@ public class OrderService {
                     bookService.getBookById(entry.getKey()).get(),
                     entry.getValue());
         }
+        createOrderConfirmationEmail(user, order);
         return order;
+    }
+
+    /**
+     * Létrehozza és elküldi a rendelés visszaigazoló emailt
+     */
+    private void createOrderConfirmationEmail(User user, Order order) {
+        EmailDto emailDto = new EmailDto();
+        emailDto.setTo(user.getEmail());
+        emailDto.setSubject("Order Confirmation - Order #" + order.getId());
+        emailDto.setBody(loadOrderConfirmationTemplate());
+        emailService.sendEmail(emailDto);
+
+    }
+
+    /**
+     * Beolvassa az email sablont a resources mappában található fájlból
+     */
+    private String loadOrderConfirmationTemplate() {
+        try {
+            ClassPathResource resource = new ClassPathResource("email-templates/order-confirmation.txt");
+            return Files.readString(resource.getFile().toPath(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException("Nem sikerült beolvasni az email sablont", e);
+        }
     }
 
     public List<Order> getAllOrders() {
@@ -65,7 +95,4 @@ public class OrderService {
     public void deleteOrder(int id) {
         orderRepository.deleteById(id);
     }
-
-
-
 }
