@@ -67,21 +67,8 @@ public class OrderService {
         EmailDto emailDto = new EmailDto();
         emailDto.setTo(user.getEmail());
         emailDto.setSubject("Order Confirmation - Order #" + order.getId());
-        emailDto.setBody(loadOrderConfirmationTemplate());
+        emailDto.setBody(emailService.loadEmailTemplate("order-confirmation.txt"));
         emailService.sendEmail(emailDto);
-
-    }
-
-    /**
-     * Beolvassa az email sablont a resources mappában található fájlból
-     */
-    private String loadOrderConfirmationTemplate() {
-        try {
-            ClassPathResource resource = new ClassPathResource("email-templates/order-confirmation.txt");
-            return Files.readString(resource.getFile().toPath(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException("Nem sikerült beolvasni az email sablont", e);
-        }
     }
 
     public List<Order> getAllOrders() {
