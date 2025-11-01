@@ -79,13 +79,6 @@ A backend és egyes szervizek működéséhez szükséges környezeti változók
 - REST API endpointok jogosultság-alapú védelme
 - Minden új AI-modul és service külön konténerben, könnyen skálázhatóan deployolható
 
-## Hozzájárulás
-
-Szívesen fogadunk pull requesteket, javaslatokat! Kérjük, kövesd a meglévő kódstílust és a mikroszervizes elveket.
-
-## Licenc
-
-MIT
 
 ---
 
