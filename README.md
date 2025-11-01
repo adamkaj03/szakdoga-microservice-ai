@@ -43,8 +43,8 @@ A teljes rendszer konténerizált, fejlesztéshez és teszteléshez `docker-comp
 
 1. **Projekt klónozása**
    ```bash
-   git clone https://github.com/adamkaj03/halado_adatb.git
-   cd halado_adatb
+   git clone https://github.com/adamkaj03/szakdoga-microservice-ai.git
+   cd szakdoga-microservice-ai
    ```
 
 2. **Docker Compose indítása**
