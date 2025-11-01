@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: konyvesbolt
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - webshop-net
+
+  backend:
+    build: ./java-webshop
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/konyvesbolt
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+    ports:
+      - "8080:8080"
+    networks:
+      - webshop-net
+
+  frontend:
+    build: ./angular-webshop
+    depends_on:
+      - backend
+    ports:
+      - "4200:80" # Angular dev: 4200, Nginx: 80
+    networks:
+      - webshop-net
+
+volumes:
+  db_data:
+
+networks:
+  webshop-net:
