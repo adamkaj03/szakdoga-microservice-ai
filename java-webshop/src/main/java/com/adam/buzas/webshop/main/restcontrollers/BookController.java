@@ -1,6 +1,7 @@
 package com.adam.buzas.webshop.main.restcontrollers;
 
 import com.adam.buzas.webshop.main.converter.JsonStringToObjectConverter;
+import com.adam.buzas.webshop.main.dto.BookDataResponseDto;
 import com.adam.buzas.webshop.main.dto.BookRequest;
 import com.adam.buzas.webshop.main.model.Book;
 import com.adam.buzas.webshop.main.model.Category;
@@ -90,7 +91,22 @@ public class BookController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseText("Sikertelen felvétel!"));
         }
+    }
 
+    /**
+     * Egy kép alapján visszaküldi a könyv adatait.
+     * Csak adminisztrátori feltöltésnél használt endpoint!
+     *
+     * @param file A feltöltött könyvborító képe (Multipart form-data).
+     * @return A könyv extrahált adatai (cím, szerző, leírás).
+     */
+    @PostMapping("/books/get-data-by-image")
+    public ResponseEntity<BookDataResponseDto> getBookDataByImage(@RequestParam("file") MultipartFile file){
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        BookDataResponseDto response = bookService.getBookDataByImage(file);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/books/{id}")

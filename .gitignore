@@ -46,6 +46,9 @@ java-webshop/.mvn/
 java-webshop/logs/
 java-webshop/.env
 
+# ---- Python ----
+*.pyc
+
 # ---- OS/Tooling általános ----
 *.bak
 *.tmp

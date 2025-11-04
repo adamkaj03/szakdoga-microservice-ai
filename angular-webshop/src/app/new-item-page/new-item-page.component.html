@@ -9,6 +9,7 @@
             <hr>
             <div class="row">
               <div class="col-xs-12 col-md-10 mx-md-auto">
+                <!-- Alert messages -->
                 <div class="alert alert-danger" *ngIf="errorMessageCategory">
                   <p>{{ errorMessageCategory }}</p>
                 </div>
@@ -21,43 +22,163 @@
                 <div class="alert alert-danger" *ngIf="errorMessageBook">
                   <p>{{ errorMessageBook }}</p>
                 </div>
+                <div class="alert alert-danger" *ngIf="errorMessageAI">
+                  <p>{{ errorMessageAI }}</p>
+                </div>
+
                 <form #newItemForm="ngForm" (ngSubmit)="onSubmit(newItemForm)">
+                  <!-- Category mode -->
                   <div *ngIf="isNewCategoryMode" class="form-group">
-                    <input type="text" id="categoryName" class="form-control" ngModel name="categoryName" required minlength="1" placeholder="Kategória név"><br>
+                    <input 
+                      type="text" 
+                      id="categoryName" 
+                      class="form-control" 
+                      ngModel 
+                      name="categoryName" 
+                      required 
+                      minlength="1" 
+                      placeholder="Kategória név">
+                    <br>
                   </div>
-                  <div *ngIf="!isNewCategoryMode" class="form-group">
-                    <input type="text" id="title" class="form-control" ngModel name="title" required minlength="1" placeholder="Könyv címe"><br>
+
+                  <!-- Book mode -->
+                  <div *ngIf="!isNewCategoryMode">
+                    <!-- Image upload - First field -->
+                    <div class="form-group mb-4">
+                      <label for="bookImage" class="form-label fw-bold">Kép feltöltése *</label>
+                      <input 
+                        type="file" 
+                        id="bookImage"
+                        class="form-control" 
+                        (change)="onFileSelected($event)" 
+                        accept="image/*">
+                      
+                      <!-- Image preview -->
+                      <div *ngIf="imagePreviewUrl" class="mt-3 text-center">
+                        <img 
+                          [src]="imagePreviewUrl" 
+                          alt="Könyv borító előnézet" 
+                          class="img-thumbnail" 
+                          style="max-width: 300px; max-height: 400px;">
+                      </div>
+
+                      <!-- AI Generation button -->
+                      <div class="mt-3">
+                        <button 
+                          type="button" 
+                          class="btn btn-success w-100" 
+                          (click)="onGenerateAIDescription(newItemForm)"
+                          [disabled]="!selectedFile || isLoadingAI">
+                          <span *ngIf="!isLoadingAI">
+                            <i class="bi bi-magic"></i> AI leírás generálása
+                          </span>
+                          <span *ngIf="isLoadingAI">
+                            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                            Generálás folyamatban...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Title -->
+                    <div class="form-group mb-3">
+                      <input 
+                        type="text" 
+                        id="title" 
+                        class="form-control" 
+                        ngModel 
+                        name="title" 
+                        required 
+                        minlength="1" 
+                        placeholder="Könyv címe">
+                    </div>
+
+                    <!-- Author -->
+                    <div class="form-group mb-3">
+                      <input 
+                        type="text" 
+                        id="author" 
+                        class="form-control" 
+                        ngModel 
+                        name="author" 
+                        required 
+                        minlength="1" 
+                        placeholder="Szerző">
+                    </div>
+
+                    <!-- Publish Year -->
+                    <div class="form-group mb-3">
+                      <input 
+                        type="number" 
+                        id="publishYear" 
+                        class="form-control" 
+                        ngModel 
+                        name="publishYear" 
+                        required 
+                        minlength="1" 
+                        placeholder="Kiadás éve">
+                    </div>
+
+                    <!-- Price -->
+                    <div class="form-group mb-3">
+                      <input 
+                        type="number" 
+                        id="price" 
+                        class="form-control" 
+                        ngModel 
+                        name="price" 
+                        required 
+                        minlength="1" 
+                        placeholder="Ár">
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group mb-3">
+                      <label for="categorySelect" class="form-label">Kategória</label>
+                      <select 
+                        class="form-select" 
+                        ngModel 
+                        name="category" 
+                        id="categorySelect"
+                        required>
+                        <option *ngFor="let category of (categories | async)" [value]="category.id">
+                          {{category.name}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group mb-3">
+                      <textarea 
+                        id="description" 
+                        class="form-control" 
+                        ngModel 
+                        name="description" 
+                        required 
+                        minlength="1" 
+                        rows="4"
+                        placeholder="Leírás">
+                      </textarea>
+                    </div>
                   </div>
-                  <div *ngIf="!isNewCategoryMode" class="form-group">
-                    <input type="text" id="author" class="form-control" ngModel name="author" required minlength="1" placeholder="Szerző"><br>
-                  </div>
-                  <div *ngIf="!isNewCategoryMode" class="form-group">
-                    <input type="number" id="publishYear" class="form-control" ngModel name="publishYear" required minlength="1" placeholder="Kiadás éve"><br>
-                  </div>
-                  <div *ngIf="!isNewCategoryMode" class="form-group">
-                    <input type="number" id="price" class="form-control" ngModel name="price" required minlength="1" placeholder="Ár"><br>
-                  </div>
-                  <div *ngIf="!isNewCategoryMode" class="form-group">
-                    <label>Kategória</label><p></p>
-                    <select ngModel name="category" id="categorySelect">
-                      <option *ngFor="let category of (categories | async)" [value]="category.id">{{category.name}}</option>
-                    </select>
-                  </div>
-                  <p></p>
-                  <div *ngIf="!isNewCategoryMode" class="form-group">
-                    <input type="text" id="description" class="form-control" ngModel name="description" required minlength="1" placeholder="Leírás"><br>
-                  </div>
-                  <div *ngIf="!isNewCategoryMode" class="form-group mt-3">
-                    <label class="mr-2">Kép feltöltése</label>
-                    <input type="file" (change)="onFileSelected($event)" accept="image/*">
-                  </div>
+
                   <hr>
-                  <div>
-                    <button class="btn btn-primary" style="align-self: center" type="submit" [disabled]="!newItemForm.valid">
+                  
+                  <!-- Submit and mode switch buttons -->
+                  <div class="d-grid gap-2">
+                    <button 
+                      class="btn btn-primary" 
+                      type="submit" 
+                      [disabled]="!newItemForm.valid">
                       Hozzáadás
                     </button>
-                    <hr>
-                    <button class="btn btn-primary" type="button" style="align-self: center" (click)="onSwitchMode()">
+                    
+                    <button 
+                      class="btn btn-outline-secondary" 
+                      type="button" 
+                      (click)="onSwitchMode()">
                       {{isNewCategoryMode ? 'Új könyvet akarok felvinni' : 'Új kategóriát akarok felvinni'}}
                     </button>
                   </div>

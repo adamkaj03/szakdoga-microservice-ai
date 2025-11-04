@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Book} from "../models/book";
 import {StorageService} from "./storage.service";
 import {BookRequest} from "../models/bookRequest";
+import {BookDataResponse} from "../models/bookDataResponse";
 import { environment } from 'src/environment';
 
 /**
@@ -45,5 +46,11 @@ export class BookService {
     formData.append("bookRequest", JSON.stringify(book))
     formData.append("file", file!, file?.name)
     return this.http.post(this.apiUrl + "/api/books", formData, {headers: this.headers})
+  }
+
+  getBookDataByImage(file: File): Observable<BookDataResponse> {
+    const formData: FormData = new FormData();
+    formData.append("file", file, file.name);
+    return this.http.post<BookDataResponse>(this.apiUrl + "/api/books/get-data-by-image", formData, {headers: this.headers});
   }
 }
