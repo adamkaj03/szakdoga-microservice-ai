@@ -1,0 +1,12 @@
+<div class="landing-page-container" [class.chat-open]="isChatOpen">
+  <div class="content-area">
+    <!-- Landing Page - 3 szekció külön komponensekben -->
+    <app-featured-carousel></app-featured-carousel>
+    <app-recommended-books></app-recommended-books>
+    <app-all-books></app-all-books>
+  </div>
+
+  <!-- Chat Components -->
+  <app-chat-button></app-chat-button>
+  <app-chat-window></app-chat-window>
+</div>

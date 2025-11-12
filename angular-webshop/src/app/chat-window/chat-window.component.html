@@ -1,0 +1,69 @@
+<div class="chat-window" *ngIf="isChatOpen">
+  <!-- Chat Header -->
+  <div class="chat-header">
+    <div class="header-content">
+      <div class="ai-avatar">
+        <i class="bi bi-robot"></i>
+      </div>
+      <div class="header-info">
+        <h3>AI Könyv Asszisztens</h3>
+        <p class="status">
+          <span class="status-dot"></span>
+          Online
+        </p>
+      </div>
+    </div>
+    <button class="close-button" (click)="closeChat()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Messages Container -->
+  <div class="messages-container" #messagesContainer>
+    <div class="messages-list">
+      <div 
+        *ngFor="let message of messages" 
+        class="message-wrapper"
+        [class.user-message]="message.sender === 'user'"
+        [class.ai-message]="message.sender === 'ai'">
+        
+        <div class="message-avatar" *ngIf="message.sender === 'ai'">
+          <i class="bi bi-robot"></i>
+        </div>
+        
+        <div class="message-content">
+          <div class="message-bubble">
+            <p>{{ message.text }}</p>
+          </div>
+          <span class="message-time">{{ formatTime(message.timestamp) }}</span>
+        </div>
+        
+        <div class="message-avatar" *ngIf="message.sender === 'user'">
+          <i class="bi bi-person-fill"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="input-area">
+    <div class="input-wrapper">
+      <textarea
+        [(ngModel)]="newMessage"
+        (keypress)="onKeyPress($event)"
+        placeholder="Írj egy üzenetet..."
+        class="message-input"
+        rows="1"></textarea>
+      <button 
+        class="send-button" 
+        (click)="sendMessage()"
+        [disabled]="!newMessage.trim()">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
+    <p class="input-hint">
+      <i class="bi bi-info-circle"></i>
+      Enter = küldés, Shift + Enter = új sor
+    </p>
+  </div>
+</div>

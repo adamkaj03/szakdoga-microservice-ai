@@ -6,7 +6,8 @@ import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-logout',
-  templateUrl: './logout.component.html'
+  templateUrl: './logout.component.html',
+  styleUrls: ['./logout.component.css']
 })
 export class LogoutComponent {
   constructor(private authService: AuthService,

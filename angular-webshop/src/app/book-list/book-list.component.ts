@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Book} from "../models/book";
-import {HttpErrorResponse} from "@angular/common/http";
 import {BookService} from "../services/book.service";
 import {StorageService} from "../services/storage.service";
 import {Observable} from "rxjs";
@@ -25,7 +24,6 @@ export class BookListComponent implements OnInit{
     private cartService: CartService,
     private toastr: ToastrService) {
   }
-
 
   public getBooks() {
     let categoryId = this.storageService.getCategory()

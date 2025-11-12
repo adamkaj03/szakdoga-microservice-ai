@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import {StorageService} from "../services/storage.service";
 import {Router} from "@angular/router";
+import {NgForm} from "@angular/forms";
 import {CategoryService} from "../services/category.service";
 import {Observable} from "rxjs";
-import {Book} from "../models/book";
 import {Category} from "../models/category";
-import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,7 +14,7 @@ import {NgForm} from "@angular/forms";
 export class NavBarComponent {
 
   public storageServiceData: StorageService;
-  public categories: Observable<Category[]>  = new Observable<Category[]>();
+  public categories: Observable<Category[]> = new Observable<Category[]>();
   searchWord = ""
   constructor(
     private router: Router,
@@ -29,6 +28,15 @@ export class NavBarComponent {
 
   navigateToSignIn(){
     this.router.navigateByUrl("/signin");
+  }
+
+  navigateToHome(event: Event){
+    event.preventDefault();
+    this.storageService.cleanCategory();
+    this.storageService.cleanSeachWord();
+    this.router.navigateByUrl("/").then(() => {
+      window.location.reload();
+    });
   }
 
   isUserAdmin(): boolean {
@@ -48,12 +56,14 @@ export class NavBarComponent {
   refreshWithCategory(id: number|null) {
     this.storageService.cleanSeachWord()
     if(id !== null){
-      this.storageService.saveCategory(id!);
+      this.storageService.saveCategory(id);
     }
     else{
       this.storageService.cleanCategory();
     }
-    this.router.navigateByUrl("/");
+    this.router.navigateByUrl("/").then(() => {
+      window.location.reload();
+    });
   }
 
   navigateToCart() {
@@ -65,10 +75,12 @@ export class NavBarComponent {
     const word = searchForm.value.search
     if(word !== null && word != ""){
       this.storageService.saveSearchWord(word)
+      this.router.navigateByUrl("/search").then(() => {
+        window.location.reload();
+      });
     }
     else{
       this.storageService.cleanSeachWord()
     }
-    location.reload()
   }
 }

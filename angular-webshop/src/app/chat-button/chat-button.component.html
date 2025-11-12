@@ -1,0 +1,8 @@
+<button 
+  class="chat-toggle-button" 
+  [style.bottom.px]="bottomPosition"
+  (click)="toggleChat()"
+  *ngIf="!isChatOpen">
+  <i class="bi bi-chat-dots-fill"></i>
+  <span class="button-text">AI Segítség</span>
+</button>

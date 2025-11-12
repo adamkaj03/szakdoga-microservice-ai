@@ -1,0 +1,41 @@
+<!-- SECTION 3: All Books -->
+<section class="all-books-section py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">
+        <i class="bi bi-grid-3x3-gap me-2"></i>Összes könyv
+      </h2>
+      <p class="section-subtitle">Böngésszen teljes kínálatunkban</p>
+    </div>
+    
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div class="col mb-4" *ngFor="let book of (books | async)">
+        <a (click)="navigateToBookPage(encodeURIComponent(book.title))" (mouseover)="changeCursorStyle($event)">
+          <div class="card h-100 book-card">
+            <ng-container *ngIf="isBookImgUrlNotNull(book); else elseBlock">
+              <img class="card-img-top" [src]="book.imgUrl" alt="{{ book.title }}" />
+            </ng-container>
+            <ng-template #elseBlock>
+              <img class="card-img-top" src="https://dummyimage.com/400x500/dee2e6/6c757d.jpg" alt="..." />
+            </ng-template>
+
+            <div class="card-body p-4">
+              <div class="text-center">
+                <h5 class="book-title">{{ book.title }}</h5>
+                <p class="book-author">{{ book.author }}</p>
+                <h4 class="book-price">{{ book.price }} Ft</h4>
+              </div>
+            </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <button class="btn btn-add-cart" (click)="addToCart(book)" data-no-navigation>
+                  <i class="bi bi-cart-plus me-2"></i>Kosárba
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

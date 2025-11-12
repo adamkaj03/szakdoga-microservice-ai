@@ -4,7 +4,6 @@ import {HttpClientModule} from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import {BookService} from "./services/book.service";
-import { BookListComponent } from './book-list/book-list.component';
 import {RouterModule, Routes} from "@angular/router";
 import { AuthComponent } from './auth/auth.component';
 import {FormsModule} from "@angular/forms";
@@ -25,9 +24,19 @@ import { NewItemPageComponent } from './new-item-page/new-item-page.component';
 import { ArchivePageComponent } from './archive-page/archive-page.component';
 import { StatusTranslatePipe } from './pipes/status-translate.pipe';
 import { NewArchiveComponent } from './new-archive/new-archive.component';
+import { FooterComponent } from './footer/footer.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { FeaturedCarouselComponent } from './featured-carousel/featured-carousel.component';
+import { RecommendedBooksComponent } from './recommended-books/recommended-books.component';
+import { AllBooksComponent } from './all-books/all-books.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { ChatButtonComponent } from './chat-button/chat-button.component';
+import { ChatWindowComponent } from './chat-window/chat-window.component';
+import { ChatService } from './services/chat.service';
 
 const appRoutes: Routes = [
-  {path: "", component: BookListComponent},
+  {path: "", component: LandingPageComponent},
+  {path: "search", component: SearchResultComponent},
   {path: "signin", component: AuthComponent},
   {path: "book/:title", component: BookPageComponent},
   {path: "orders", component: OrderPageComponent, canActivate: [RoleGuard], data: {
@@ -50,7 +59,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    BookListComponent,
     AuthComponent,
     LoadingSpinnerComponent,
     LogoutComponent,
@@ -64,7 +72,15 @@ const appRoutes: Routes = [
     NewItemPageComponent,
     ArchivePageComponent,
     StatusTranslatePipe,
-    NewArchiveComponent
+    NewArchiveComponent,
+    FooterComponent,
+    LandingPageComponent,
+    FeaturedCarouselComponent,
+    RecommendedBooksComponent,
+    AllBooksComponent,
+    SearchResultComponent,
+    ChatButtonComponent,
+    ChatWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +94,8 @@ const appRoutes: Routes = [
     })
   ],
   providers: [BookService,
-              RoleGuard],
+              RoleGuard,
+              ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

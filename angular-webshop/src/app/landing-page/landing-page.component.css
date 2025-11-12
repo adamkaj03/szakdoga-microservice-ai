@@ -1,0 +1,34 @@
+/* Landing page wrapper - minimal styling */
+:host {
+  display: block;
+}
+
+.landing-page-container {
+  display: flex;
+  transition: all 0.3s ease;
+}
+
+.content-area {
+  flex: 1;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* When chat is open, adjust the content area width */
+.landing-page-container.chat-open .content-area {
+  width: 50%;
+  padding-right: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .landing-page-container.chat-open .content-area {
+    width: 40%;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-page-container.chat-open .content-area {
+    display: none;
+  }
+}
