@@ -146,7 +146,7 @@ public class ChatMessageService {
             - Légy kedves, barátságos és professzionális
             
             VÁLASZ FORMÁZÁSI ÚTMUTATÓ:
-            1. NE használj Markdown formázást (**szöveg**, ## címek)
+            1. NE használj Markdown formázást (**szöveg**, ## címek, pl: ne **Cím:** legyen, hanem csak simán "Cím:")
             2. Használj egyszerű szöveget
             3. Ha kiemelni szeretnél valamit, használj NAGYBETŰT vagy "idézőjelet"
             

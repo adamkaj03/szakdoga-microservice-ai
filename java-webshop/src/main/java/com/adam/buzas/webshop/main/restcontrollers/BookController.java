@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +83,7 @@ public class BookController {
         try {
             BookRequest json = convertStringToRequest(bookRequest);
             String url = imageUploadService.uploadImage(file, file.getOriginalFilename());
-            Book book = new Book(json.getTitle(), json.getAuthor(), json.getPublishYear(), json.getPrice(), json.getCategory(), url, json.getDescription());
+            Book book = new Book(json.getTitle(), json.getAuthor(), json.getPublishYear(), json.getPrice(), json.getCategory(), url, json.getDescription(), LocalDateTime.now());
             if(bookService.hasBookWithTitleAndAuthor(book.getTitle(), book.getAuthor())){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseText("Sikertelen felvétel!"));
             }
@@ -129,4 +130,14 @@ public class BookController {
         return (BookRequest) converter.convertJsonStringToObject(bookRequest, BookRequest.class);
     }
 
+    /**
+     * Visszaadja a legújabb könyveket.
+     *
+     * @return A legújabb könyvek listája.
+     * @throws IOException Ha hiba történik az adatok lekérése során.
+     */
+    @GetMapping("books/latest")
+    public List<Book> convertStringToList() throws IOException {
+        return bookService.getLatestBooks();
+    }
 }

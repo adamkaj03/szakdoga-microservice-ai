@@ -33,6 +33,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { ChatButtonComponent } from './chat-button/chat-button.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { ChatService } from './services/chat.service';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 const appRoutes: Routes = [
   {path: "", component: LandingPageComponent},
@@ -80,7 +81,8 @@ const appRoutes: Routes = [
     AllBooksComponent,
     SearchResultComponent,
     ChatButtonComponent,
-    ChatWindowComponent
+    ChatWindowComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,

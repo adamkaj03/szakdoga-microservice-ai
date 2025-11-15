@@ -1,0 +1,115 @@
+<!-- Keresősáv komponens - Támogatja a normál, AI szöveges és AI képalapú keresést -->
+<form class="search-form" #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
+  
+  <!-- Keresési típus váltó tabok -->
+  <div class="search-type-tabs">
+    <!-- Normál keresés tab -->
+    <button 
+      type="button"
+      class="search-tab"
+      [class.active]="activeSearchType === SearchType.STANDARD"
+      (click)="setSearchType(SearchType.STANDARD)"
+      title="Hagyományos keresés"
+      aria-label="Normál keresés">
+      <i class="bi bi-search"></i>
+      <span class="tab-label">Normál</span>
+    </button>
+    
+    <!-- AI szöveges keresés tab -->
+    <button 
+      type="button"
+      class="search-tab"
+      [class.active]="activeSearchType === SearchType.AI_TEXT"
+      (click)="setSearchType(SearchType.AI_TEXT)"
+      title="AI szöveges keresés"
+      aria-label="AI szöveges keresés">
+      <i class="bi bi-robot"></i>
+      <span class="tab-label">AI Szöveg</span>
+    </button>
+    
+    <!-- AI képalapú keresés tab -->
+    <button 
+      type="button"
+      class="search-tab"
+      [class.active]="activeSearchType === SearchType.AI_IMAGE"
+      (click)="setSearchType(SearchType.AI_IMAGE)"
+      title="AI képalapú keresés"
+      aria-label="AI képalapú keresés">
+      <i class="bi bi-image"></i>
+      <span class="tab-label">AI Kép</span>
+    </button>
+  </div>
+
+  <!-- Keresési input terület -->
+  <div class="search-input-container">
+    <!-- Normál és AI szöveges keresés input mező -->
+    <div class="input-group" *ngIf="activeSearchType !== SearchType.AI_IMAGE">
+      <!-- Keresési mód indikátor ikon -->
+      <span class="input-group-text search-mode-indicator">
+        <i [class]="getSearchIcon()"></i>
+      </span>
+      
+      <!-- Keresési input mező -->
+      <input 
+        class="form-control search-input" 
+        type="search" 
+        [placeholder]="getSearchPlaceholder()" 
+        aria-label="Search" 
+        ngModel 
+        name="search"
+        [class.ai-input]="activeSearchType === SearchType.AI_TEXT">
+      
+      <!-- Keresés gomb -->
+      <div class="input-group-append">
+        <button class="btn btn-search" type="submit" aria-label="Keresés">
+          <i [class]="getSearchIcon()"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- AI képalapú keresés - képfeltöltő terület -->
+    <div class="image-upload-container" *ngIf="activeSearchType === SearchType.AI_IMAGE">
+      <div class="image-upload-area" [class.has-image]="imagePreviewUrl">
+        <!-- Rejtett file input -->
+        <input 
+          type="file" 
+          #imageInput
+          accept="image/*"
+          (change)="onImageSelected($event)"
+          class="image-input"
+          id="imageUpload"
+          aria-label="Kép feltöltése">
+        
+        <!-- Feltöltési terület üres állapotban -->
+        <label for="imageUpload" class="upload-label" *ngIf="!imagePreviewUrl">
+          <i class="bi bi-cloud-upload upload-icon"></i>
+          <span class="upload-text">Kattintson vagy húzza ide a képet</span>
+          <span class="upload-hint">PNG, JPG, WEBP (Max. 5MB)</span>
+        </label>
+
+        <!-- Kép előnézet feltöltés után -->
+        <div class="image-preview" *ngIf="imagePreviewUrl">
+          <img [src]="imagePreviewUrl" alt="Feltöltött kép előnézete">
+          <button 
+            type="button" 
+            class="btn-clear-image" 
+            (click)="clearImageSelection()"
+            title="Kép törlése"
+            aria-label="Kép törlése">
+            <i class="bi bi-x-circle"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Képpel való keresés gomb -->
+      <button 
+        class="btn btn-search btn-upload-search" 
+        type="submit"
+        [disabled]="!selectedImage"
+        aria-label="Keresés képpel">
+        <i class="bi bi-search"></i>
+        <span>Keresés képpel</span>
+      </button>
+    </div>
+  </div>
+</form>

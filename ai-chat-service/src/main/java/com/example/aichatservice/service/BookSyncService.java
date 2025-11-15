@@ -105,6 +105,7 @@ public class BookSyncService {
         metadata.put("publishYear", book.getPublishYear());
         metadata.put("category", book.getCategory());
         metadata.put("price", book.getPrice());
+        metadata.put("description", book.getDescription());
 
         String documentId = "book-" + book.getId();
         return new Document(documentId, content, metadata);

@@ -109,4 +109,8 @@ public class BookService {
             throw new RuntimeException("Error processing book image", e);
         }
     }
+
+    public List<Book> getLatestBooks() {
+        return bookRepository.findTop5ByOrderByCreatedAtDesc();
+    }
 }

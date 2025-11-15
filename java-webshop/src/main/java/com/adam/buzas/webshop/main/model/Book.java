@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * A webshopban megvásárolható könyv entitásokat reprezentálja.
  */
@@ -36,7 +38,10 @@ public class Book {
     @Column(length = 10000)
     private String description;
 
-    public Book(String title, String author, int publishYear, int price, Category category, String imgUrl, String description) {
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    public Book(String title, String author, int publishYear, int price, Category category, String imgUrl, String description, LocalDateTime createdAt) {
         this.title = title;
         this.author = author;
         this.publishYear = publishYear;
@@ -44,6 +49,7 @@ public class Book {
         this.category = category;
         this.imgUrl = imgUrl;
         this.description = description;
+        this.createdAt = createdAt;
     }
 
 }

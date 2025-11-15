@@ -104,59 +104,8 @@
   border-color: rgba(255, 193, 7, 0.2);
 }
 
-/* Keresés form stílusok */
-.search-form {
-  max-width: 400px;
-  width: 100%;
-}
-
-.search-input {
-  border-radius: 25px 0 0 25px;
-  border: 2px solid rgba(255, 193, 7, 0.3);
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  padding: 0.5rem 1rem;
-  transition: all 0.3s ease;
-}
-
-.search-input:focus {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: #ffc107;
-  color: #ffffff;
-  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
-}
-
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.btn-search {
-  border-radius: 0 25px 25px 0;
-  background-color: #ffc107;
-  border: 2px solid #ffc107;
-  color: #1a1a2e;
-  padding: 0.5rem 1.2rem;
-  transition: all 0.3s ease;
-}
-
-.btn-search:hover {
-  background-color: #ffca2c;
-  border-color: #ffca2c;
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
-}
-
-.btn-search i {
-  font-size: 1.1rem;
-}
-
 /* Responsive stílusok */
 @media (max-width: 991px) {
-  .search-form {
-    max-width: 100%;
-    margin: 1rem 0;
-  }
-  
   .navbar-nav {
     text-align: center;
   }

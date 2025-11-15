@@ -44,17 +44,14 @@
       </li>
     </ul>
 
-    <!-- Keresés középen/jobbra -->
-    <form class="form-inline my-2 my-lg-0 mx-auto search-form" #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
-      <div class="input-group">
-        <input class="form-control search-input" type="search" placeholder="Keresés könyvek között..." aria-label="Search" ngModel name="search">
-        <div class="input-group-append">
-          <button class="btn btn-search" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+    <!-- Keresősáv komponens -->
+    <div class="mx-auto my-2 my-lg-0">
+      <app-search-bar
+        (standardSearch)="onStandardSearch($event)"
+        (aiTextSearch)="onAITextSearch($event)"
+        (aiImageSearch)="onAIImageSearch($event)">
+      </app-search-bar>
+    </div>
 
     <!-- Jobb oldali menüelemek -->
     <ul class="navbar-nav ml-auto">

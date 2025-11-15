@@ -42,23 +42,4 @@ public class BookServiceClient {
         }
     }
 
-    /**
-     * Könyv lekérése ID alapján a Book Service-ből.
-     *
-     * @param id A könyv azonosítója.
-     * @return A könyv adatai. Hiba esetén null.
-     */
-    public BookDto getBookById(Integer id) {
-        try {
-            return webClient.get()
-                    .uri("/api/books/id/{id}", id)
-                    .retrieve()
-                    .bodyToMono(BookDto.class)
-                    .block();
-        } catch (Exception e) {
-            log.error("Error fetching book {} from Book Service", id, e);
-            return null;
-        }
-    }
-
 }

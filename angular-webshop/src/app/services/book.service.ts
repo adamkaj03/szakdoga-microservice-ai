@@ -41,6 +41,10 @@ export class BookService {
     return this.http.get<Book[]>(this.apiUrl + "/api/books/search/" + word)
   }
 
+  getLatestBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(this.apiUrl + "/api/books/latest");
+  }
+
   postBook(book: BookRequest, file: File | null) {
     const formData: FormData = new FormData()
     formData.append("bookRequest", JSON.stringify(book))
