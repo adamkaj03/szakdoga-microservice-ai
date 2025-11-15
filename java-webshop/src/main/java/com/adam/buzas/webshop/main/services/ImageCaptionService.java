@@ -27,6 +27,7 @@ public class ImageCaptionService {
     private String aiServiceUrl;
 
     /**
+     * TODO: Meg kell szüntetni, ha meglesz az api-gateway
      * Meghívja a Python AI szolgáltatást, továbbítja a képet,
      * majd visszaadja a detektált könyv adatokat.
      *

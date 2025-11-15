@@ -24,10 +24,10 @@
       <div 
         *ngFor="let message of messages" 
         class="message-wrapper"
-        [class.user-message]="message.sender === 'user'"
-        [class.ai-message]="message.sender === 'ai'">
+        [class.user-message]="message.sender === 'USER'"
+        [class.ai-message]="message.sender === 'AI'">
         
-        <div class="message-avatar" *ngIf="message.sender === 'ai'">
+        <div class="message-avatar" *ngIf="message.sender === 'AI'">
           <i class="bi bi-robot"></i>
         </div>
         
@@ -38,7 +38,7 @@
           <span class="message-time">{{ formatTime(message.timestamp) }}</span>
         </div>
         
-        <div class="message-avatar" *ngIf="message.sender === 'user'">
+        <div class="message-avatar" *ngIf="message.sender === 'USER'">
           <i class="bi bi-person-fill"></i>
         </div>
       </div>

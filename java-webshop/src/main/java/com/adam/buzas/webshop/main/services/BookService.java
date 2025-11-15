@@ -85,6 +85,7 @@ public class BookService {
     }
 
     /**
+     * TODO: Meg kell szüntetni, ha meglesz az api-gateway
      * Feldolgozza a feltöltött könyvborító képet, és AI segítségével kinyeri a könyv releváns adatait (cím, szerző, leírás).
      *
      * A metódus meghívja az ImageCaptionService-t, amely a képet továbbítja a Python alapú AI mikroszerviznek.

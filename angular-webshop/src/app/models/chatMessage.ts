@@ -1,6 +1,8 @@
+import { ChatSender } from "./chatSender.enum";
+
 export interface ChatMessage {
-  id: number;
   text: string;
-  sender: 'user' | 'ai';
+  sender: ChatSender;
   timestamp: Date;
+  dateTime?: string;
 }

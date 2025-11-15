@@ -1,65 +1,77 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ChatMessage } from '../models/chatMessage';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { StorageService } from './storage.service';
+import { ChatSender } from '../models/chatSender.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private isChatOpenSubject = new BehaviorSubject<boolean>(false);
-  private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
+  private readonly isChatOpenSubject = new BehaviorSubject<boolean>(false);
+  private readonly messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
+  private readonly apiUrl = 'http://localhost:8080/api/ai-chat';
+  private messagesLoaded = false;
   
   public isChatOpen$: Observable<boolean> = this.isChatOpenSubject.asObservable();
   public messages$: Observable<ChatMessage[]> = this.messagesSubject.asObservable();
 
-  constructor() {
-    // TODO: Replace with real API call when endpoint is available
-    this.initializeDummyMessages();
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) {}
+
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': 'Bearer ' + this.storageService.getUserToken()
+    });
   }
 
-  private initializeDummyMessages(): void {
-    const dummyMessages: ChatMessage[] = [
-      {
-        id: 1,
-        text: 'Szia! Miben segíthetek?',
-        sender: 'ai',
-        timestamp: new Date(Date.now() - 3600000) // 1 hour ago
-      },
-      {
-        id: 2,
-        text: 'Keresek egy jó sci-fi könyvet.',
-        sender: 'user',
-        timestamp: new Date(Date.now() - 3500000)
-      },
-      {
-        id: 3,
-        text: 'Remek választás! Ajánlom a "Dűne" című könyvet Frank Herbert-től. Ez egy klasszikus sci-fi mű, amely egy messzi jövőben játszódik. A történet a sivatagi Arrakis bolygóról szól, ahol az értékes fűszer található.',
-        sender: 'ai',
-        timestamp: new Date(Date.now() - 3400000)
-      },
-      {
-        id: 4,
-        text: 'Érdekes! Van még más ajánlatod?',
-        sender: 'user',
-        timestamp: new Date(Date.now() - 3300000)
-      },
-      {
-        id: 5,
-        text: 'Természetesen! Ha modern sci-fit keresel, akkor a "Ready Player One" Ernest Cline-tól nagyszerű választás. Vagy ha cyberpunk hangulatot szeretnél, akkor William Gibson "Neurománc" című műve tökéletes.',
-        sender: 'ai',
-        timestamp: new Date(Date.now() - 3200000)
-      }
-    ];
+  private loadMessagesFromApi(): void {
+    const username = this.storageService.getUsername();
     
-    this.messagesSubject.next(dummyMessages);
+    if (!username) {
+      console.error('Username not found');
+      return;
+    }
+
+    this.http.get<ChatMessage[]>(
+      `${this.apiUrl}/messages?username=${username}`,
+      { headers: this.getHeaders() }
+    ).subscribe({
+      next: (messages) => {
+        // Konvertáljuk a dateTime stringet Date objektummá
+        const convertedMessages = messages.map(msg => ({
+          ...msg,
+          timestamp: msg.dateTime ? new Date(msg.dateTime) : new Date()
+        }));
+        this.messagesSubject.next(convertedMessages);
+        this.messagesLoaded = true;
+      },
+      error: (error) => {
+        console.error('Error loading messages:', error);
+      }
+    });
   }
 
   public toggleChat(): void {
-    this.isChatOpenSubject.next(!this.isChatOpenSubject.value);
+    const newState = !this.isChatOpenSubject.value;
+    this.isChatOpenSubject.next(newState);
+    
+    // Ha most nyílik meg a chat és még nem töltöttük be az üzeneteket
+    if (newState && !this.messagesLoaded) {
+      this.loadMessagesFromApi();
+    }
   }
 
   public openChat(): void {
     this.isChatOpenSubject.next(true);
+    
+    // Ha még nem töltöttük be az üzeneteket
+    if (!this.messagesLoaded) {
+      this.loadMessagesFromApi();
+    }
   }
 
   public closeChat(): void {
@@ -68,26 +80,58 @@ export class ChatService {
 
   public sendMessage(text: string): void {
     const currentMessages = this.messagesSubject.value;
+    const now = new Date();
     const userMessage: ChatMessage = {
-      id: currentMessages.length + 1,
       text: text,
-      sender: 'user',
-      timestamp: new Date()
+      sender: ChatSender.USER,
+      timestamp: now
     };
     
+    // Azonnal hozzáadjuk a user üzenetét a listához
     this.messagesSubject.next([...currentMessages, userMessage]);
     
-    // TODO: Replace with real API call when endpoint is available
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse: ChatMessage = {
-        id: currentMessages.length + 2,
-        text: 'Köszönöm az üzeneted! Jelenleg dummy válaszban vagyunk. Hamarosan valódi AI válaszokat fogsz kapni!',
-        sender: 'ai',
-        timestamp: new Date()
-      };
-      this.messagesSubject.next([...this.messagesSubject.value, aiResponse]);
-    }, 1000);
+    const username = this.storageService.getUsername();
+    if (!username) {
+      console.error('Username not found');
+      return;
+    }
+
+    // Formázzuk a dátumot LocalDateTime formátumra (ISO 8601 without 'Z')
+    const dateTimeString = now.toISOString().slice(0, 19);
+
+    // Request body a backend számára
+    const requestBody = {
+      sender: ChatSender.USER,
+      text: text,
+      dateTime: dateTimeString
+    };
+
+    // API hívás a backend-nek
+    this.http.post<ChatMessage>(
+      `${this.apiUrl}/send-message?username=${username}`,
+      requestBody,
+      { headers: this.getHeaders() }
+    ).subscribe({
+      next: (aiResponse) => {
+        // Konvertáljuk a dateTime-ot timestamp-re
+        const convertedResponse: ChatMessage = {
+          ...aiResponse,
+          timestamp: aiResponse.dateTime ? new Date(aiResponse.dateTime) : new Date()
+        };
+        // Hozzáadjuk az AI választ a listához
+        this.messagesSubject.next([...this.messagesSubject.value, convertedResponse]);
+      },
+      error: (error) => {
+        console.error('Error sending message:', error);
+        // Hibakezelés: fallback üzenet
+        const errorMessage: ChatMessage = {
+          text: 'Sajnálom, jelenleg nem tudok válaszolni. Kérlek próbáld újra később!',
+          sender: ChatSender.AI,
+          timestamp: new Date()
+        };
+        this.messagesSubject.next([...this.messagesSubject.value, errorMessage]);
+      }
+    });
   }
 
   public getMessages(): ChatMessage[] {

@@ -94,6 +94,7 @@ public class BookController {
     }
 
     /**
+     * TODO: Meg kell szüntetni az osztályt, ha meglesz az api-gateway
      * Egy kép alapján visszaküldi a könyv adatait.
      * Csak adminisztrátori feltöltésnél használt endpoint!
      *
